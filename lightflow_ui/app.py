@@ -87,20 +87,6 @@ def grab_related(tasks, curr):
             yield task
 
 
-def render_template(self, template_name, **context):
-    return (
-        env
-        .get_template(template_name)
-        .render(
-            dict(
-                context,
-                reverse_url=self.reverse_url,
-                static_url=self.static_url
-            )
-        )
-    )
-
-
 def parse_args(args):
     args = args[1:-1].split(', ')
 
@@ -161,14 +147,10 @@ class ForUUIDHandler(tornado.web.RequestHandler):
 
         try:
             root = tasks[uuid]
-        except KeyError as e:
-            uuid = e.args[0]
-            return self.write(
-                render_template(
-                    self,
-                    'flow_not_found.html',
-                    uuid=uuid
-                )
+        except KeyError:
+            return self.render(
+                'flow_not_found.html',
+                uuid=uuid
             )
         else:
             related = list(grab_related(tasks, root))
@@ -187,11 +169,10 @@ class ForUUIDHandler(tornado.web.RequestHandler):
         try:
             workflow_name = workflow.get('name', section='meta')
         except DataStoreDecodeUnknownType:
-            return self.write(render_template(
-                self,
+            return self.render(
                 'cannot_retrieve_workflow.html',
                 workflow_id=workflow_id
-            ))
+            )
 
         dag = workflow.get('dag', section='data')
         graph = dag.make_graph(dag._schema)
@@ -235,28 +216,27 @@ class ForUUIDHandler(tornado.web.RequestHandler):
             for source, target in graph.edges()
         ]
 
-        self.write(render_template(
-            self,
+        self.render(
             'flow.html',
             **{
                 'tasks': tasks,
                 'related': related,
                 'connections': connections,
-                'locations': locations
+                'locations': locations,
+                'json': json
             }
-        ))
+        )
 
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
         tasks = self.application.flower.tasks()
 
-        self.write(render_template(
-            self,
+        self.render(
             'index.html',
             roots=self.application.flower.roots(tasks),
             currently_running=list(self.application.flower.currently_running(tasks))
-        ))
+        )
 
 
 def main():
@@ -271,6 +251,7 @@ def main():
     here = Path(__file__).parent
     settings = {
         'static_path': str(here / 'static'),
+        'template_path': str(here / 'templates'),
         'debug': True,
         'autoreload': True
     }

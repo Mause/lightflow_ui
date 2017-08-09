@@ -16,10 +16,10 @@
     <script type="text/javascript">
         // the things that flask passes to us
         render_graph(
-            {{connections | tojson}},
-            {{related     | tojson}},
-            {{tasks       | tojson}},
-            {{locations   | tojson}}
+            {% raw json.dumps(connections)%},
+            {% raw json.dumps(related    )%},
+            {% raw json.dumps(tasks      )%},
+            {% raw json.dumps(locations  )%}
         );
     </script>
 </body>
