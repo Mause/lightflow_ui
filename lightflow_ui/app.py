@@ -68,15 +68,13 @@ class Flower:
         ]
 
     def currently_running(self, tasks=None):
-        tasks = tasks or self.tasks()
-
         for root in self.roots(tasks):
-            all_states = set(
-                task.state
+            any_not_finished = any(
+                task.state != 'SUCCESS'
                 for task in grab_related(tasks, root)
             )
 
-            if all_states != {'SUCCESS'}:
+            if any_not_finished:
                 yield root
 
 
