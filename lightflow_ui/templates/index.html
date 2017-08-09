@@ -1,8 +1,10 @@
-<div>
-    {% module Template("flow_list.html", tasks=roots, workflow_ids=workflow_ids) %}
-</div>
-
 <h3>Currently running jobs</h3>
 <div>
     {% module Template("flow_list.html", tasks=currently_running, workflow_ids=workflow_ids) %}
 </div>
+
+<h3>Archived jobs</h3>
+<div>
+    {% module Template("flow_list.html", tasks=archived, workflow_ids=workflow_ids) %}
+</div>
+
