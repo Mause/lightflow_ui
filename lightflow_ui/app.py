@@ -125,12 +125,6 @@ class ForUUIDHandler(tornado.web.RequestHandler):
         else:
             related = list(grab_related(tasks, root))
 
-        __import__('ipdb').set_trace()
-        related = [
-            task
-            for uuid, task in tasks.items()
-            if task.job_type == 'task'
-        ]
 
         workflow_id = get_workflow_id(related)
 
