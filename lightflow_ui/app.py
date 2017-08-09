@@ -76,7 +76,12 @@ def get_workflow_id(related_tasks):
     )
 
 
-def calculate_locations(graph, root_node, task_uuid_map):
+def calculate_locations(graph, task_uuid_map):
+    root_node = next(
+        node
+        for node in graph.nodes()
+        if len(graph.predecessors(node)) == 0
+    )
     undirected = graph.to_undirected()
 
     buckets = defaultdict(list)
@@ -149,14 +154,8 @@ class ForUUIDHandler(tornado.web.RequestHandler):
             task.name: task.id
             for task in tasks.values()
         }
-
-        root_node = next(
-            node
-            for node in graph.nodes()
-            if len(graph.predecessors(node)) == 0
-        )
-
-        locations = calculate_locations(graph, root_node, task_uuid_map)
+        # location data to lay out the graph
+        locations = calculate_locations(graph, task_uuid_map)
 
         connections = [
             {
