@@ -3,18 +3,27 @@ function render_graph(links, nodes, locations, statuses) {
         // colours from http://clrs.cc/
         var state = statuses[d.name];
         var colours = {
-            'SUCCESS': '#2ECC40',
-            'STOPPED': '#7FDBFF',
-            'ABORTED': '#0074D9',
-            'ERROR': '#FF4136',
-            'LIGHTFLOW-STARTED': '#FF851B',
-            'NOT-RUNNING': '#001f3f'
+            'SUCCESS': 'green',
+            'STOPPED': 'aqua',
+            'ABORTED': 'blue',
+            'ERROR': 'red',
+            'LIGHTFLOW-STARTED': 'orange',
+            'NOT-RUNNING': 'navy'
         }
         if (colours[state]) {
             return colours[state];
         }
         console.log(state);
-        return 'pink';
+        return '#F012BE';
+    }
+    function color_for() {
+        return d => (
+            Array.prototype.slice.call(arguments)
+            .map(
+                type => type + get_color(d)
+            )
+            .join(' ')
+        )
     }
 
     var get_loc = (size, key) => name => (
@@ -47,7 +56,7 @@ function render_graph(links, nodes, locations, statuses) {
         .append('rect')
         .attr('width', node_width)
         .attr('height', node_height)
-        .attr('stroke', get_color)
+        .attr('class', color_for('stroke-'))
         .attr('fill', 'white')
         .attr(
             'transform',
@@ -58,8 +67,7 @@ function render_graph(links, nodes, locations, statuses) {
     g.enter()
         .append('text')
             .text(d => d.name)
-            .attr('stroke', get_color)
-            .attr('fill', get_color)
+            .attr('class', color_for('stroke-', 'fill-'))
             .attr(
                 'transform',
                 d => (
