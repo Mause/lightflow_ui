@@ -78,13 +78,13 @@ class Flower:
                 yield root
 
 
-def grab_related(tasks, curr, column=0):
+def grab_related(tasks, curr):
     """
-    Grabs all the related tasks, assigns columns and rows
+    Grabs all the related tasks
     """
-    yield curr
-    for child in curr.children:
-        yield from grab_related(tasks, child, column + 1)
+    for task in tasks.values():
+        if curr.root == task.root:
+            yield task
 
 
 def render_template(self, template_name, **context):
