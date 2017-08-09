@@ -190,10 +190,10 @@ class ForUUIDHandler(tornado.web.RequestHandler):
         locations = calculate_locations(graph, root_node, task_uuid_map)
 
         connections = [
-            (
-                task_uuid_map[source.name],
-                task_uuid_map[target.name]
-            )
+            {
+                "source": task_uuid_map[source.name],
+                "target": task_uuid_map[target.name]
+            }
             for source, target in graph.edges()
         ]
 

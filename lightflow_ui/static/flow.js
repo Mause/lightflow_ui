@@ -12,10 +12,6 @@ function get_color(d) {
 }
 
 function render_graph(links, nodes, tasks, locations) {
-    links = links.map(pair => ({
-        source: pair[0],
-        target: pair[1]
-    }));
 
     var node_height = 40,
         node_width = 200,
