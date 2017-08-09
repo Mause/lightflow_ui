@@ -20,10 +20,6 @@ class Flower:
     def __init__(self, events):
         self.events = events
 
-    def task_info(self, uuid):
-        # return requests.get(self.root + '/task/info/' + uuid).json()
-        return get_task_by_id(uuid).as_dict()
-
     def tasks(self):
         return dict(iter_tasks(self.events))
 
@@ -130,9 +126,7 @@ class ForUUIDHandler(tornado.web.RequestHandler):
         else:
             related = list(grab_related(tasks, root))
 
-
         workflow_id = get_workflow_id(related)
-
         workflow = self.application.data_store.get(workflow_id)
 
         try:
