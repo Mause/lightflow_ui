@@ -80,6 +80,10 @@ def calculate_locations(graph):
     )
     undirected = graph.to_undirected()
 
+    # we basically just sort all the nodes into buckets
+    # depending on how far away they are from the root
+    # node, and then give them a column and row based
+    # on that
     buckets = defaultdict(list)
     for node in graph.nodes():
         distance = nx.shortest_path_length(
