@@ -1,3 +1,7 @@
-<h3>Can no longer retrieve data for workflow with id {{workflow_id}}</h3>
+{% extends "base.html" %}
 
-<p>Try rerunning the workflow with the <code>-k</code> flag - otherwise the data is deleted when the task completes</p>
+{% block content %}
+    <h3>Can no longer retrieve data for workflow with id {{workflow_id}}</h3>
+
+    <p>Try rerunning the workflow with the <code>-k</code> flag - otherwise the data is deleted when the task completes</p>
+{% end %}

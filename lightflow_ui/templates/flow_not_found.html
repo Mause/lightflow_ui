@@ -1,3 +1,7 @@
-<h3>Flow not found: {{uuid}}</h3>
+{% extends "base.html" %}
 
-<a href="{{ reverse_url('index') }}">Go home</a>
+{% block content %}
+    <h3>Flow not found: {{uuid}}</h3>
+
+    <a href="{{ reverse_url('index') }}">Go home</a>
+{% end %}

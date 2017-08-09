@@ -1,20 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
+{% extends "base.html" %}
+
+{% block content %}
     <script type="text/javascript" src="{{ static_url('d3.v3.js') }}"></script>
     <script type="text/javascript" src="{{ static_url('flow.js') }}"></script>
-
-    <style>
-        body {
-            font-family: -apple-system, 'avenir next', avenir, roboto, noto, ubuntu, 'helvetica neue', helvetica, arial, sans-serif;
-        }
-    </style>
-</head>
-<body>
     <h3>{{workflow_name}}</h3>
-    <small><a href="/">Go back</a></small>
-    <svg/>
+    <div>
+        <small><a href="/">Go back</a></small>
+    </div>
+    <br/>
+    <div>
+        <svg/>
+    </div>
     <script type="text/javascript">
         // the things that flask passes to us
         render_graph(
@@ -24,8 +20,4 @@
             {% raw json.dumps(statuses   )%}
         );
     </script>
-</body>
-</html>
-
-
-
+{% end %}
