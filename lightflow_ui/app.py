@@ -163,6 +163,7 @@ class ForUUIDHandler(tornado.web.RequestHandler):
         self.render(
             'flow.html',
             **{
+                'workflow_name': workflow_name,
                 'related': [{'name': node.name} for node in graph.nodes()],
                 'statuses': statuses,
                 'connections': connections,
