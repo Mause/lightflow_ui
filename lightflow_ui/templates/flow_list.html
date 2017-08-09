@@ -1,0 +1,6 @@
+{% for task in tasks %}
+    <a href="{{ reverse_url('for_uuid', task.uuid) }}">
+        {{task.name}} - {{task.uuid}} - {{workflow_ids[task.uuid]}}
+    </a>
+    <br/>
+{% end %}
