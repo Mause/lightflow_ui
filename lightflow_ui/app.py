@@ -10,7 +10,6 @@ import flower.api.events  # noqa
 from flower.events import Events
 from lightflow.config import Config
 from lightflow.queue.app import create_app
-from networkx.drawing.nx_agraph import graphviz_layout
 from tornado.options import parse_command_line
 from lightflow.models.datastore import DataStore
 from flower.utils.tasks import iter_tasks, get_task_by_id
@@ -88,15 +87,6 @@ def get_workflow_id(related_tasks):
         for args in task_args
         if len(args) == 3
     )
-
-
-def write_graph(graph):
-    import matplotlib as mpl
-    mpl.use('Agg')
-    import matplotlib.pyplot as plt
-    f = plt.figure()
-    nx.draw(graph, graphviz_layout(graph), ax=f.add_subplot(111))
-    f.savefig("graph.png")
 
 
 def calculate_locations(graph, root_node, task_uuid_map):
@@ -192,8 +182,6 @@ class ForUUIDHandler(tornado.web.RequestHandler):
             task_map[dag.name],
             root_node
         )
-
-        write_graph(graph)
 
         # reset the root_node to the actual root,
         # so the layout logic works
