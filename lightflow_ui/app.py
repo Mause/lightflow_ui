@@ -11,29 +11,9 @@ from lightflow.config import Config
 from lightflow.queue.app import create_app
 from networkx.drawing.nx_agraph import graphviz_layout
 from tornado.options import parse_command_line
-from jinja2 import Environment, FileSystemLoader
 from lightflow.models.datastore import DataStore
 from flower.utils.tasks import iter_tasks, get_task_by_id
 from lightflow.models.exceptions import DataStoreDecodeUnknownType
-
-
-env = Environment(loader=FileSystemLoader('templates/'))
-
-
-def default(obj):
-    try:
-        json.dumps(obj)
-    except (ValueError, TypeError):
-        return repr(obj)
-    else:
-        return obj
-
-
-env.policies['json.dumps_kwargs'] = {
-    'sort_keys': True,
-    'indent': 4,
-    'default': default
-}
 
 
 class Lazy:
