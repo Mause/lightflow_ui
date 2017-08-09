@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from operator import attrgetter
 from collections import defaultdict
 
 import tornado.web
@@ -117,7 +118,7 @@ def calculate_locations(graph, root_node, task_uuid_map):
             'row': row_idx
         }
         for col_idx, column in buckets.items()
-        for row_idx, node in enumerate(column)
+        for row_idx, node in enumerate(sorted(column, key=attrgetter('name')))
     }
 
 
