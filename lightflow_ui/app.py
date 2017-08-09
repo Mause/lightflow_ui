@@ -155,18 +155,6 @@ class ForUUIDHandler(tornado.web.RequestHandler):
             for node in graph.nodes()
             if len(graph.predecessors(node)) == 0
         )
-        graph.add_edge(
-            task_map[workflow_name],
-            task_map[dag.name]
-        )
-        graph.add_edge(
-            task_map[dag.name],
-            root_node
-        )
-
-        # reset the root_node to the actual root,
-        # so the layout logic works
-        root_node = task_map[workflow_name]
 
         locations = calculate_locations(graph, root_node, task_uuid_map)
 
