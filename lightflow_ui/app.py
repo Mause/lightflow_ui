@@ -122,6 +122,18 @@ def calculate_locations(graph, root_node, task_uuid_map):
     }
 
 
+def determine_statuses(graph, related):
+    # nodes in the graph that weren't run (or have not yet run) won't appear
+    # in the list of related tasks
+    statuses = dict.fromkeys(
+        (node.name for node in graph.nodes()),
+        'NOT-RUNNING'
+    )
+    for task in related:
+        statuses[task.name] = task.state
+    return statuses
+
+
 class ForUUIDHandler(tornado.web.RequestHandler):
     def get(self, uuid):
         tasks = self.application.flower.tasks()
@@ -197,11 +209,14 @@ class ForUUIDHandler(tornado.web.RequestHandler):
             for source, target in graph.edges()
         ]
 
+        statuses = determine_statuses(graph, related)
+
         self.render(
             'flow.html',
             **{
                 'tasks': tasks,
                 'related': related,
+                'statuses': statuses,
                 'connections': connections,
                 'locations': locations,
                 'json': json
