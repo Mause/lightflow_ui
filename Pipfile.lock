@@ -1,0 +1,144 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "32a39bc1a0ac76f253e43c5fab42c1620c0be3e14355ea3e61d7ff1258f90258"
+        },
+        "requires": {},
+        "sources": [
+            {
+                "url": "https://pypi.python.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "amqp": {
+            "version": "==2.2.1"
+        },
+        "billiard": {
+            "version": "==3.5.0.3"
+        },
+        "celery": {
+            "version": "==4.1.0"
+        },
+        "certifi": {
+            "version": "==2017.7.27.1"
+        },
+        "chardet": {
+            "version": "==3.0.4"
+        },
+        "click": {
+            "version": "==6.7"
+        },
+        "cloudpickle": {
+            "version": "==0.3.1"
+        },
+        "colorlog": {
+            "version": "==3.0.1"
+        },
+        "decorator": {
+            "version": "==4.1.2"
+        },
+        "flask": {
+            "version": "==0.12.2"
+        },
+        "flower": {
+            "git": "https://github.com/mher/flower"
+        },
+        "idna": {
+            "version": "==2.5"
+        },
+        "itsdangerous": {
+            "version": "==0.24"
+        },
+        "jinja2": {
+            "version": "==2.9.6"
+        },
+        "kombu": {
+            "version": "==4.1.0"
+        },
+        "lightflow": {
+            "version": "==1.8.5"
+        },
+        "markupsafe": {
+            "version": "==1.0"
+        },
+        "networkx": {
+            "version": "==1.11"
+        },
+        "pymongo": {
+            "version": "==3.4.0"
+        },
+        "pytz": {
+            "version": "==2017.2"
+        },
+        "redis": {
+            "version": "==2.10.5"
+        },
+        "requests": {
+            "version": "==2.18.3"
+        },
+        "ruamel.yaml": {
+            "version": "==0.15.23"
+        },
+        "tornado": {
+            "version": "==4.5.1"
+        },
+        "urllib3": {
+            "version": "==1.22"
+        },
+        "vine": {
+            "version": "==1.1.4"
+        },
+        "werkzeug": {
+            "version": "==0.12.2"
+        }
+    },
+    "develop": {
+        "decorator": {
+            "version": "==4.1.2"
+        },
+        "ipdb": {
+            "version": "==0.10.3"
+        },
+        "ipython": {
+            "version": "==6.1.0"
+        },
+        "ipython-genutils": {
+            "version": "==0.2.0"
+        },
+        "jedi": {
+            "version": "==0.10.2"
+        },
+        "pexpect": {
+            "version": "==4.2.1"
+        },
+        "pickleshare": {
+            "version": "==0.7.4"
+        },
+        "prompt-toolkit": {
+            "version": "==1.0.15"
+        },
+        "ptyprocess": {
+            "version": "==0.5.2"
+        },
+        "pygments": {
+            "version": "==2.2.0"
+        },
+        "setuptools": {
+            "version": "==36.2.7"
+        },
+        "simplegeneric": {
+            "version": "==0.8.1"
+        },
+        "six": {
+            "version": "==1.10.0"
+        },
+        "traitlets": {
+            "version": "==4.3.2"
+        },
+        "wcwidth": {
+            "version": "==0.1.7"
+        }
+    }
+}

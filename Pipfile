@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+[dev-packages]
+ipdb = "*"
+
+[packages]
+redis = "*"
+requests = "*"
+tornado = "*"
+flask = "*"
+lightflow = "*"
+numpy = "*"
+matplotlib = "*"
+
+[packages.flower]
+git = "https://github.com/mher/flower"

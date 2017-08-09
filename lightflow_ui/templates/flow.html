@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script type="text/javascript" src="{{ static_url('d3.v3.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('flow.js') }}"></script>
+
+    <style>
+        body {
+            font-family: -apple-system, 'avenir next', avenir, roboto, noto, ubuntu, 'helvetica neue', helvetica, arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <svg/>
+    <script type="text/javascript">
+        // the things that flask passes to us
+        render_graph(
+            {{connections | tojson}},
+            {{related     | tojson}},
+            {{tasks       | tojson}},
+            {{locations   | tojson}}
+        );
+    </script>
+</body>
+</html>
+
+
+
