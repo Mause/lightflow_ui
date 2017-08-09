@@ -175,10 +175,20 @@ class IndexHandler(tornado.web.RequestHandler):
     def get(self):
         tasks = self.application.flower.tasks()
 
+        roots = self.application.flower.roots(tasks)
+
+        workflow_ids = {
+            root.uuid: get_workflow_id(grab_related(tasks, root))
+            for root in roots
+        }
+
         self.render(
             'index.html',
-            roots=self.application.flower.roots(tasks),
-            currently_running=list(self.application.flower.currently_running(tasks))
+            roots=roots,
+            workflow_ids=workflow_ids,
+            currently_running=list(
+                self.application.flower.currently_running(tasks)
+            )
         )
 
 

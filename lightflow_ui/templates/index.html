@@ -1,7 +1,9 @@
-
 <div>
     {% for task in roots %}
-        <a href="{{ reverse_url('for_uuid', task.uuid) }}">{{task.name}} - {{task.uuid}}</a><br/>
+        <a href="{{ reverse_url('for_uuid', task.uuid) }}">
+            {{task.name}} - {{task.uuid}} - {{workflow_ids[task.uuid]}}
+        </a>
+        <br/>
     {% end %}
 </div>
 
@@ -9,6 +11,9 @@
 <h3>Currently running jobs</h3>
 <div>
     {% for task in currently_running %}
-        <a href="{{ reverse_url('for_uuid', task.uuid) }}">{{task.name}} - {{task.uuid}}</a><br/>
+        <a href="{{ reverse_url('for_uuid', task.uuid) }}">
+            {{task.name}} - {{task.uuid}} - {{workflow_ids[task.uuid]}}
+        </a>
+        <br/>
     {% end %}
 </div>
