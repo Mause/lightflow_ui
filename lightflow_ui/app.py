@@ -16,19 +16,6 @@ from flower.utils.tasks import iter_tasks, get_task_by_id
 from lightflow.models.exceptions import DataStoreDecodeUnknownType
 
 
-class Lazy:
-    def __init__(self, factory):
-        self.factory = factory
-        self.value = None
-
-    def __getattr__(self, name):
-        if self.value is None:
-            self.value = self.factory()
-        value = getattr(self.value, name)
-        setattr(self, name, value)
-        return value
-
-
 class Flower:
     def __init__(self, events):
         self.events = events
