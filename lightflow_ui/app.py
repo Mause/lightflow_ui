@@ -76,7 +76,7 @@ def get_workflow_id(related_tasks):
     )
 
 
-def calculate_locations(graph, task_uuid_map):
+def calculate_locations(graph):
     root_node = next(
         node
         for node in graph.nodes()
@@ -95,7 +95,7 @@ def calculate_locations(graph, task_uuid_map):
         buckets[distance].append(node)
 
     return {
-        task_uuid_map[node.name]: {
+        node.name: {
             'column': col_idx,
             'row': row_idx
         }
@@ -146,21 +146,14 @@ class ForUUIDHandler(tornado.web.RequestHandler):
         dag = workflow.get('dag', section='data')
         graph = dag.make_graph(dag._schema)
 
-        task_map = {
-            task.name: task
-            for task in tasks.values()
-        }
-        task_uuid_map = {
-            task.name: task.id
-            for task in tasks.values()
-        }
         # location data to lay out the graph
-        locations = calculate_locations(graph, task_uuid_map)
+        locations = calculate_locations(graph)
 
+        # the links for d3 to consume
         connections = [
             {
-                "source": task_uuid_map[source.name],
-                "target": task_uuid_map[target.name]
+                "source": source.name,
+                "target": target.name
             }
             for source, target in graph.edges()
         ]

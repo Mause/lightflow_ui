@@ -11,7 +11,10 @@ function get_color(d) {
     return 'pink';
 }
 
-function render_graph(links, nodes, tasks, locations) {
+function render_graph(links, nodes, locations, statuses) {
+    var get_loc = (size, key) => name => (
+        locations[name][key] * size * spacing_factor
+    )
 
     var node_height = 40,
         node_width = 200,
@@ -31,12 +34,8 @@ function render_graph(links, nodes, tasks, locations) {
         .domain(domain)
         .range([0, svg.attr('width')])
 
-    var get_x = d => (
-        locations[d.uuid].column * node_width * spacing_factor
-    );
-    var get_y = d => (
-        locations[d.uuid].row   * node_height * spacing_factor
-    );
+    var get_x = get_loc(node_width, 'column');
+    var get_y = get_loc(node_height, 'row');
 
     var g = svg.selectAll('g').data(nodes)
     g.enter()
@@ -48,7 +47,7 @@ function render_graph(links, nodes, tasks, locations) {
         .attr(
             'transform',
             d => (
-                `translate(${get_x(d)}, ${get_y(d)})`
+                `translate(${get_x(d.name)}, ${get_y(d.name)})`
             )
         );
     g.enter()
@@ -61,14 +60,14 @@ function render_graph(links, nodes, tasks, locations) {
                 d => (
                     // move the text somewhere nice
                     `translate(` +
-                        `${get_x(d) + 2.5},` +
-                        `${get_y(d) + 14}` +
+                        `${get_x(d.name) + 2.5},` +
+                        `${get_y(d.name) + 14}` +
                     `)`
                 )
             );
 
-    function get_y_from_id(id) {
-        return get_y(tasks[id]) + (node_height / 2);
+    function get_y_for_link(name) {
+        return get_y(name) + (node_height / 2);
     }
 
     svg.attr('class', 'line')
@@ -76,9 +75,9 @@ function render_graph(links, nodes, tasks, locations) {
         .enter().append('line')
         .style('stroke', 'grey')
 
-        .attr('x1', d => get_x(tasks[d.source]) + node_width)
-        .attr('y1', d => get_y_from_id(d.source))
+        .attr('x1', d => get_x(d.source) + node_width)
+        .attr('y1', d => get_y_for_link(d.source))
 
-        .attr('x2', d => get_x(tasks[d.target]))
-        .attr('y2', d => get_y_from_id(d.target));
+        .attr('x2', d => get_x(d.target))
+        .attr('y2', d => get_y_for_link(d.target));
 }
