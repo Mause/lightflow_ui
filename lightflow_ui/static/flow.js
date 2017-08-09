@@ -1,17 +1,22 @@
-function get_color(d) {
-    // colours from http://clrs.cc/
-    var colours = {
-        'SUCCESS': '#2ECC40',
-        'LIGHTFLOW-STARTED': '#FF851B'
-    }
-    if (colours[d.state]) {
-        return colours[d.state];
-    }
-    console.log(d.state);
-    return 'pink';
-}
-
 function render_graph(links, nodes, locations, statuses) {
+    function get_color(d) {
+        // colours from http://clrs.cc/
+        var state = statuses[d.name];
+        var colours = {
+            'SUCCESS': '#2ECC40',
+            'STOPPED': '#7FDBFF',
+            'ABORTED': '#0074D9',
+            'ERROR': '#FF4136',
+            'LIGHTFLOW-STARTED': '#FF851B',
+            'NOT-RUNNING': '#001f3f'
+        }
+        if (colours[state]) {
+            return colours[state];
+        }
+        console.log(state);
+        return 'pink';
+    }
+
     var get_loc = (size, key) => name => (
         locations[name][key] * size * spacing_factor
     )
