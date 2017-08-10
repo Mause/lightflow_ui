@@ -204,7 +204,7 @@ class ForUUIDHandler(tornado.web.RequestHandler):
             for source, target in graph.edges()
         ]
 
-        statuses = determine_statuses(graph, related)
+        statuses = determine_statuses(graph, namespaced_tasks(related))
 
         self.render(
             'flow.html',
