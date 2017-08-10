@@ -120,6 +120,14 @@ def determine_statuses(graph, related):
     return statuses
 
 
+def namespaced_graph(dag):
+    dag_name = dag.name
+    graph = dag.make_graph(dag._schema)
+    for node in graph:
+        node._name = dag_name + ':' + node.name
+    return graph
+
+
 class ForUUIDHandler(tornado.web.RequestHandler):
     def get(self, uuid):
         tasks = self.application.flower.tasks()
