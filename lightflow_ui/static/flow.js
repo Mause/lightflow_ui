@@ -27,7 +27,7 @@ function render_graph(links, nodes, locations, statuses) {
     }
 
     var get_loc = (size, key) => name => (
-        locations[name][key] * size * spacing_factor
+        5 + (locations[name][key] * size * spacing_factor)
     )
 
     var node_height = 40,
