@@ -169,8 +169,21 @@ class ForUUIDHandler(tornado.web.RequestHandler):
                 workflow_id=workflow_id
             )
 
-        dag = workflow.get('dag', section='data')
-        graph = dag.make_graph(dag._schema)
+        dags = workflow.get('dags')
+
+        graphs = list(map(namespaced_graph, dags))
+
+        graph = nx.compose_all(graphs)
+        graph.add_edges_from(
+            (
+                get_connecting_node(
+                    graphs[0],
+                    subgraph,
+                ),
+                get_root_node(subgraph)
+            )
+            for subgraph in graphs[1:]
+        )
 
         # location data to lay out the graph
         locations = calculate_locations(graph)
