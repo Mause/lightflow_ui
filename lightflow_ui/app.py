@@ -144,6 +144,13 @@ def namespaced_tasks(tasks):
             yield rel
 
 
+def get_connecting_node(root_graph, subgraph):
+    return {
+        node.name: node
+        for node in root_graph
+    }['main_dag:1:call_dag_task']
+
+
 class ForUUIDHandler(tornado.web.RequestHandler):
     def get(self, uuid):
         tasks = self.application.flower.tasks()
