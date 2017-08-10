@@ -75,7 +75,7 @@ def get_workflow_id(related_tasks):
 def calculate_locations(graph):
     root_node = next(
         node
-        for node in graph.nodes()
+        for node in graph
         if len(graph.predecessors(node)) == 0
     )
     undirected = graph.to_undirected()
@@ -85,7 +85,7 @@ def calculate_locations(graph):
     # node, and then give them a column and row based
     # on that
     buckets = defaultdict(list)
-    for node in graph.nodes():
+    for node in graph:
         distance = nx.shortest_path_length(
             undirected,
             root_node,
@@ -108,7 +108,7 @@ def determine_statuses(graph, related):
     # nodes in the graph that weren't run (or have not yet run) won't appear
     # in the list of related tasks
     statuses = dict.fromkeys(
-        (node.name for node in graph.nodes()),
+        (node.name for node in graph),
         'NOT-RUNNING'
     )
     for task in related:
@@ -162,7 +162,7 @@ class ForUUIDHandler(tornado.web.RequestHandler):
             'flow.html',
             **{
                 'workflow_name': workflow_name,
-                'related': [{'name': node.name} for node in graph.nodes()],
+                'related': [{'name': node.name} for node in graph],
                 'statuses': statuses,
                 'connections': connections,
                 'locations': locations,
