@@ -34,7 +34,8 @@ function render_graph(links, nodes, locations, statuses) {
         node_width = 200,
         graph_height = 1024,
         graph_width = 1024,
-        spacing_factor = 1.1;
+        spacing_factor = 1.1,
+        text_size = 19.2;
 
     var svg = d3.select('svg')
         .attr('width', graph_width)
@@ -68,6 +69,7 @@ function render_graph(links, nodes, locations, statuses) {
         .append('text')
             .text(d => d.name)
             .attr('class', color_for('stroke-', 'fill-'))
+            .attr('font-size', `${text_size}px`)
             .attr(
                 'transform',
                 d => (
