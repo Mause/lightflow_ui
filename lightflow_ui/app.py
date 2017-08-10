@@ -60,6 +60,14 @@ def parse_args(args):
             yield arg
 
 
+def get_root_node(graph):
+    return next(
+        node
+        for node in graph
+        if len(graph.predecessors(node)) == 0
+    )
+
+
 def get_workflow_id(related_tasks):
     task_args = [
         list(parse_args(task.args))
@@ -73,11 +81,7 @@ def get_workflow_id(related_tasks):
 
 
 def calculate_locations(graph):
-    root_node = next(
-        node
-        for node in graph
-        if len(graph.predecessors(node)) == 0
-    )
+    root_node = get_root_node(graph)
     undirected = graph.to_undirected()
 
     # we basically just sort all the nodes into buckets
