@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from copy import deepcopy
 from operator import attrgetter
 from collections import defaultdict
 
@@ -126,6 +127,21 @@ def namespaced_graph(dag):
     for node in graph:
         node._name = dag_name + ':' + node.name
     return graph
+
+
+def get_dag_for_task(task):
+    while task and task.job_type != 'dag':
+        task = task.parent
+    return task
+
+
+def namespaced_tasks(tasks):
+    for rel in tasks:
+        if getattr(rel, 'job_type', None) == 'task':
+            dag = get_dag_for_task(rel)
+            rel = deepcopy(rel)  # don't modify the original
+            rel.name = dag.name + ':' + rel.name
+            yield rel
 
 
 class ForUUIDHandler(tornado.web.RequestHandler):
