@@ -31,7 +31,7 @@ function render_graph(links, nodes, locations, statuses) {
     )
 
     var node_height = 40,
-        node_width = 200,
+        node_width = 0,
         graph_height = 1024,
         graph_width = 1024,
         spacing_factor = 1.1,
@@ -40,6 +40,20 @@ function render_graph(links, nodes, locations, statuses) {
     var svg = d3.select('svg')
         .attr('width', graph_width)
         .attr('height', graph_height);
+
+    // dynamically determine how wide the nodes should be
+    svg.selectAll('g').data(nodes)
+        .enter()
+        .append('text')
+        .attr('font-size', `${text_size}px`)
+        .text(d => d.name)
+        .each(function() {
+            node_width = Math.max(
+                node_width,
+                this.getComputedTextLength() + 16
+            );
+            this.remove();
+        })
 
     var domain = [
         d3.min(nodes, d => d.received),
