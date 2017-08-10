@@ -75,8 +75,12 @@ function render_graph(links, nodes, locations, statuses) {
                 d => (
                     // move the text somewhere nice
                     `translate(` +
-                        `${get_x(d.name) + 2.5},` +
-                        `${get_y(d.name) + 14}` +
+                        `${get_x(d.name) + 8},` +
+                        `${
+                            get_y(d.name) +
+                            (node_height / 2) +
+                            (text_size / 4)
+                        }` +
                     `)`
                 )
             );
