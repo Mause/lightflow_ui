@@ -245,7 +245,7 @@ class IndexHandler(tornado.web.RequestHandler):
         )
 
 
-def main():
+def main(args):
     parse_command_line()
 
     config = Config.from_file(
